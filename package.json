@@ -1,6 +1,6 @@
 {
   "name": "planet-toast",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A beautiful, customizable toast notification library for React with TypeScript support",
   "type": "module",
   "main": "dist/index.js",
