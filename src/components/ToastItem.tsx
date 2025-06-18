@@ -25,24 +25,28 @@ export const ToastItem: React.FC<ToastItemProps> = ({
           backgroundColor: "#f0fdf4",
           borderColor: "#22c55e",
           color: "#15803d",
+          iconBg: "#10b981",
         };
       case "error":
         return {
           backgroundColor: "#fef2f2",
           borderColor: "#ef4444",
           color: "#dc2626",
+          iconBg: "#ef4444",
         };
       case "loading":
         return {
           backgroundColor: "#eff6ff",
           borderColor: "#3b82f6",
           color: "#1d4ed8",
+          iconBg: "#3b82f6",
         };
       default:
         return {
           backgroundColor: "#ffffff",
           borderColor: "#e5e7eb",
           color: "#374151",
+          iconBg: "#6b7280",
         };
     }
   };
@@ -60,16 +64,17 @@ export const ToastItem: React.FC<ToastItemProps> = ({
         left: "50%",
         transform: `translateX(-50%) ${transform}`,
         opacity: toastData.visible ? 1 : 0,
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
         zIndex: 9999,
         pointerEvents: toastData.visible ? "auto" : "none",
+        willChange: "transform, opacity",
       }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: "12px",
-          padding: "12px 16px",
+          padding: "14px 16px",
           borderRadius: "12px",
           border: "1px solid",
           boxShadow:
@@ -79,11 +84,13 @@ export const ToastItem: React.FC<ToastItemProps> = ({
           fontSize: "14px",
           fontFamily: "system-ui, -apple-system, sans-serif",
           cursor: "pointer",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
           ...typeStyles,
         }}
         onClick={handleDismiss}>
         <ToastIcon type={toastData.type} />
-        <div style={{ flex: 1, wordBreak: "break-word" }}>
+        <div style={{ flex: 1, wordBreak: "break-word", lineHeight: "1.5" }}>
           {toastData.message}
         </div>
         <button
@@ -93,17 +100,24 @@ export const ToastItem: React.FC<ToastItemProps> = ({
             cursor: "pointer",
             opacity: 0.5,
             fontSize: "16px",
-            padding: "0",
+            padding: "4px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "20px",
-            height: "20px",
+            width: "24px",
+            height: "24px",
             borderRadius: "50%",
-            transition: "opacity 0.2s",
+            transition: "all 0.2s ease",
+            color: typeStyles.color,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = "1";
+            e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.05)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = "0.5";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
           onClick={(e) => {
             e.stopPropagation();
             handleDismiss();
